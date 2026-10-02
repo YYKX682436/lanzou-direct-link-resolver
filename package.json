@@ -1,0 +1,12 @@
+{
+  "name": "lanzou-direct-link-resolver",
+  "version": "1.0.0",
+  "description": "Resolve public Lanzou share links to final download URLs",
+  "type": "commonjs",
+  "main": "src/lanzou.js",
+  "bin": { "lanzou-resolve": "src/cli.js" },
+  "scripts": { "test": "node --test", "check": "node --check src/lanzou.js && node --check src/cli.js" },
+  "engines": { "node": ">=22" },
+  "dependencies": { "axios": "^1.18.1" },
+  "license": "MIT"
+}
