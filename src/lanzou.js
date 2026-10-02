@@ -121,9 +121,8 @@ async function resolveLanzouShare(shareUrl) {
     catch { throw new Error("Lanzou returned an invalid download response"); }
     if (Number(linkInfo?.zt) !== 1 || !linkInfo.dom || !linkInfo.url) throw new Error(cleanText(linkInfo?.inf) || "Lanzou did not return a download link");
     const dom = parseAllowedHttpsUrl(linkInfo.dom, "download");
-    const intermediate = new URL(`/file/${encodeURIComponent(linkInfo.url)}`, dom);
-    intermediate.searchParams.delete("pid");
-    downloadUrl = await resolveFinalDownload(intermediate.toString());
+    const intermediate = `${dom.origin}/file/${linkInfo.url}`.replace(/([?&])pid=[^&]*&?/i, "$1");
+    downloadUrl = await resolveFinalDownload(intermediate);
   }
   return { downloadUrl, name: page.name, fileSize: page.fileSize };
 }

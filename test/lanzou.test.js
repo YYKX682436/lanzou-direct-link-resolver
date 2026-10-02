@@ -7,9 +7,11 @@ const { parseAllowedHttpsUrl, parseSharePage, solveAcwChallenge, resolveLanzouSh
 
 test("accepts HTTPS Lanzou hosts and rejects other hosts or schemes", () => {
   assert.equal(parseAllowedHttpsUrl("https://wwx.lanzoua.com/i123").hostname, "wwx.lanzoua.com");
+  assert.equal(parseAllowedHttpsUrl("https://down.lanosso.com/file/abc", "download").hostname, "down.lanosso.com");
   for (const url of ["https://example.com/", "http://lanzoua.com/", "https://lanzoua.com.evil.example/", "https://user@lanzoua.com/", "https://127.0.0.1/"]) {
     assert.throws(() => parseAllowedHttpsUrl(url), /Only HTTPS Lanzou Cloud URLs/);
   }
+  assert.throws(() => parseAllowedHttpsUrl("https://evil.example/file/abc", "download"), /Only HTTPS Lanzou Cloud URLs/);
 });
 
 test("solves a fixed acw challenge input", () => {
